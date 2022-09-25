@@ -4,7 +4,7 @@
     {
       "type": "pwa-chrome",
       "request": "launch",
-      "name": "CV-parser",
+      "name": "CV-parser launch",
       "preLaunchTask": "npm: dev-debug",
       "url": "https://github.com/njzydark/chrome-extension-boilerplate",
       "webRoot": "${workspaceFolder}",
