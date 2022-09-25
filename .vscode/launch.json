@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "CV-parser",
+      "preLaunchTask": "npm: dev-debug",
+      "url": "https://github.com/njzydark/chrome-extension-boilerplate",
+      "webRoot": "${workspaceFolder}",
+      "runtimeArgs": ["--load-extension=${workspaceFolder}/dist"]
+    }
+  ]
+}
