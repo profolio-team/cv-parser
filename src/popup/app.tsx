@@ -1,22 +1,11 @@
+import { callFunctionInPage } from '@/utils/callFunctionInPage';
+
 export const App = () => {
   const color = 'red';
 
   const changeColor = () => {
     document.body.style.background = 'red';
   };
-
-  const handleClick = async () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      const curId = tabs[0].id;
-      if (curId) {
-        chrome.scripting.executeScript({ target: { tabId: curId }, func: changeColor, args: [] });
-      }
-    });
-  };
-
-  if (!color) {
-    return <div>Init color not found</div>;
-  }
 
   return (
     <div style={{ display: 'grid', gap: '25px', width: '500px', height: '300px' }}>
@@ -27,7 +16,7 @@ export const App = () => {
           Parse
         </button>
         <div
-          onClick={handleClick}
+          onClick={() => callFunctionInPage(changeColor)}
           style={{
             background: color,
             padding: '5px 10px',
