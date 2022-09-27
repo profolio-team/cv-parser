@@ -1,6 +1,6 @@
 {
-  "name": "Getting Started Example",
-  "description": "Build an Extension!",
+  "name": "Profolio parser",
+  "description": "Profolio parser",
   "version": "1.0",
   "manifest_version": 3,
   "background": {
@@ -25,24 +25,13 @@
   "options_page": "options.html",
   "content_scripts": [
     {
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "js": [
-        "js/test.js"
-      ]
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/test.js"]
     },
     {
-      "matches": [
-        "https://github.com/*"
-      ],
-      "js": [
-        "js/github.js"
-      ],
-      "css": [
-        "css/github.css"
-      ]
+      "matches": ["https://github.com/*"],
+      "js": ["js/github.js"],
+      "css": ["css/github.css"]
     }
   ]
 }

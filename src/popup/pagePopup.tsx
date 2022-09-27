@@ -4,34 +4,30 @@ export const injectableMainFunction = () => {
   const createMainPopup = () => {
     const POPUP_ID = 'SV_PARSER_POPUP';
     const popupContainer = document.createElement('div');
+    const shadow = popupContainer.attachShadow({ mode: 'closed' });
     popupContainer.id = POPUP_ID;
     popupContainer.setAttribute(
       'style',
       `
         position: fixed;
         z-index: 999999999;
-        right: 15px;
-        top: 15px;
+        right: 0;
+        top: 0;
         width: 600px;
-        height: max-content;
+        height: 100vh;
         background: white;
         color: #111;
-        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        box-shadow: -10px 0 38px rgba(0, 0, 0, 0.7), 0 15px 12px rgba(0, 0, 0, 0.4);
   `
     );
-    popupContainer.innerHTML = `
-    <div style="display: grid; gap: 25px; padding: 15px">
-        <form action="/" method="post" style="display: grid; gap: 10px; width: 100%; height: max-content">
-            <label htmlFor="cv-file" style="color:#111">Upload cv for parsing</label>
-            <input type="file" id="cv-file" />
 
-            <button type="submit" style="padding: 10px 20px">
-                Parse
-            </button>
-        </form>
-    </div>
+    const wrapper = document.createElement('iframe');
+    wrapper.src = `https://profolio.dev/parser/public`;
+    wrapper.style.width = '100%';
+    wrapper.style.height = '100%';
+    wrapper.style.border = 'none';
 
-    `;
+    shadow.appendChild(wrapper);
     document.body.appendChild(popupContainer);
   };
 
