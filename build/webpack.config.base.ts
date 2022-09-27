@@ -8,19 +8,16 @@ import path from 'path';
 import { Configuration as WebpackConfiguration } from 'webpack';
 import { Configuration as WebpackDevServerConfiguration } from 'webpack-dev-server';
 
-import pkg from '../package.json';
 interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration & { progress?: boolean };
 }
-
-const chromeMainfestVersion = pkg.chromeExtension['mainifest-version'];
 
 const config: Configuration = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
     filename: pathData => {
-      return pathData?.chunk?.name === 'background' && chromeMainfestVersion === 3 ? '[name].js' : 'js/[name].js';
+      return pathData?.chunk?.name === 'background' ? '[name].js' : 'js/[name].js';
     },
     hotUpdateChunkFilename: 'hot/[id].[fullhash].hot-update.js',
     hotUpdateMainFilename: 'hot/[runtime].[fullhash].hot-update.json'
@@ -110,15 +107,9 @@ const config: Configuration = {
     }),
     new ChromeExtensionReloaderWebpackPlugin({
       autoOpenDebugPages: process.env.OPEN_DEBUG_PAGES === 'true',
-      manifestPath: [
-        path.resolve(__dirname, '../src/manifest.v2.json'),
-        path.resolve(__dirname, '../src/manifest.v3.json')
-      ],
+      manifestPath: [path.resolve(__dirname, '../src/manifest.v3.json')],
       entry: {
-        background: path.resolve(
-          __dirname,
-          chromeMainfestVersion === 3 ? '../src/background/v3.ts' : '../src/background/v2.ts'
-        ),
+        background: path.resolve(__dirname, '../src/background/v3.ts'),
         popup: path.resolve(__dirname, '../src/popup/index.tsx'),
         options: path.resolve(__dirname, '../src/options/index.tsx'),
         contentScriptDirPath: path.resolve(__dirname, '../src/contents')
@@ -127,10 +118,7 @@ const config: Configuration = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(
-            __dirname,
-            chromeMainfestVersion === 3 ? '../src/manifest.v3.json' : '../src/manifest.v2.json'
-          ),
+          from: path.resolve(__dirname, '../src/manifest.v3.json'),
           to: path.resolve(__dirname, '../dist/manifest.json')
         },
         { from: path.resolve(__dirname, '../src/assets'), to: path.resolve(__dirname, '../dist/images') }
@@ -145,13 +133,7 @@ const config: Configuration = {
       filename: 'options.html',
       chunks: ['options'],
       title: 'options page'
-    }),
-    chromeMainfestVersion !== 3 &&
-      new HtmlWebpackPlugin({
-        filename: 'background.html',
-        chunks: ['background'],
-        title: 'background page'
-      })
+    })
   ].filter(Boolean)
 };
 

@@ -39,7 +39,7 @@ contents/test/t/index.ts 🚫
 
 ## Features
 
-- Support manifest v2 and v3
+- Support manifest v3
 - Support HMR
 - Support react fast refresh
 - Support auto reload when content scripts change

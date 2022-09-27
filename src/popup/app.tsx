@@ -1,7 +1,5 @@
 import { useColor } from '@/hooks/useColor';
 
-const extensionVersion = chrome.runtime.getManifest().manifest_version;
-
 export const App = () => {
   const { color } = useColor();
 
@@ -15,12 +13,7 @@ export const App = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
       const curId = tabs[0].id;
       if (curId) {
-        console.log(extensionVersion);
-        if (extensionVersion === 3) {
-          chrome.scripting.executeScript({ target: { tabId: curId }, func: changeColor, args: [color] });
-        } else {
-          chrome.tabs.executeScript(curId, { code: `document.body.style.background="${color}";` });
-        }
+        chrome.scripting.executeScript({ target: { tabId: curId }, func: changeColor, args: [color] });
       }
     });
   };

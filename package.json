@@ -17,7 +17,7 @@
   "author": "profolio team",
   "license": "MIT",
   "chromeExtension": {
-    "mainifest-version": 2
+    "mainifest-version": 3
   },
   "husky": {
     "hooks": {
