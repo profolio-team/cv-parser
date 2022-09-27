@@ -1,19 +1,15 @@
-import { useColor } from '@/hooks/useColor';
-
 export const App = () => {
-  const { color } = useColor();
+  const color = 'red';
 
-  const changeColor = (color?: string) => {
-    if (color) {
-      document.body.style.background = color;
-    }
+  const changeColor = () => {
+    document.body.style.background = 'red';
   };
 
   const handleClick = async () => {
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
       const curId = tabs[0].id;
       if (curId) {
-        chrome.scripting.executeScript({ target: { tabId: curId }, func: changeColor, args: [color] });
+        chrome.scripting.executeScript({ target: { tabId: curId }, func: changeColor, args: [] });
       }
     });
   };
